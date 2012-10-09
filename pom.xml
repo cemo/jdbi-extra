@@ -13,8 +13,6 @@
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-      <metrics.version>3.0.0-SNAPSHOT</metrics.version>
-      <jersey.version>1.14</jersey.version>
    </properties>
 
    <developers>
@@ -71,8 +69,7 @@
          <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
       </repository>
       <site>
-         <id>repo.codahale.com</id>
-         <url>scp://codahale.com/home/codahale/dropwizard.codahale.com/maven/</url>
+         <!--todo-->
       </site>
    </distributionManagement>
 

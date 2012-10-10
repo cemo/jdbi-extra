@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.digitolio</groupId>
    <artifactId>jdbi-extra</artifactId>
-   <version>0.1</version>
+   <version>0.2-SNAPSHOT</version>
    <name>${project.groupId}:${project.artifactId}:${project.version}</name>
    <description>JDBI extra</description>
 
@@ -33,7 +33,7 @@
       <connection>scm:git:git@github.com:cemo/jdbi-extra.git</connection>
       <developerConnection>scm:git:git@github.com:cemo/jdbi-extra.git</developerConnection>
       <url>http://github.com/cemo/jdbi-extra/</url>
-      <tag>v0.1</tag>
+      <tag>HEAD</tag>
    </scm>
 
    <issueManagement>

@@ -1,4 +1,4 @@
-package stargate.ext.jdbi;
+package com.digitolio.jdbi;
 
 /**
  *

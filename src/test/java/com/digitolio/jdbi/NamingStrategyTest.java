@@ -1,6 +1,5 @@
-package stargate.ext.jdbi;
+package com.digitolio.jdbi;
 
-import com.digitolio.jdbi.NamingStrategy;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

@@ -32,15 +32,15 @@
    </licenses>
 
    <scm>
-      <connection>scm:git:git@github.com:Cemo/jdbi-extra.git</connection>
-      <developerConnection>scm:git:git@github.com:Cemo/jdbi-extra.git</developerConnection>
-      <url>http://github.com/Cemo/jdbi-extra/</url>
+      <connection>scm:git:git@github.com:cemo/jdbi-extra.git</connection>
+      <developerConnection>scm:git:git@github.com:cemo/jdbi-extra.git</developerConnection>
+      <url>http://github.com/cemo/jdbi-extra/</url>
       <tag>HEAD</tag>
    </scm>
 
    <issueManagement>
       <system>github</system>
-      <url>http://github.com/Cemo/jdbi-extra/issues#issue/</url>
+      <url>http://github.com/cemo/jdbi-extra/issues#issue/</url>
    </issueManagement>
 
    <repositories>

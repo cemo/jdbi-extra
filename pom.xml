@@ -20,6 +20,11 @@
 
    <developers>
       <developer>
+         <name>Omer Basar</name>
+         <email>omer.basar@gmail.com</email>
+         <timezone>2</timezone>
+      </developer>
+      <developer>
          <name>Cemalettin Koc</name>
          <email>cemalettin.koc@gmail.com</email>
          <timezone>2</timezone>

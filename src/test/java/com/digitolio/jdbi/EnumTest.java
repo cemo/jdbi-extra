@@ -25,6 +25,7 @@ public class EnumTest {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:test");
         dbi = new DBI(ds);
+
         dbi.registerArgumentFactory(new EnumArgumentFactory());
         handle = dbi.open();
         handle.execute("create table match (opponent varchar(100) primary key, place VARCHAR(64) CHECK place IN('AWAY', 'HOME'))");

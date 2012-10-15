@@ -12,9 +12,9 @@ import java.lang.annotation.*;
 import java.lang.reflect.Method;
 
 @Retention(RetentionPolicy.RUNTIME)
-@SqlStatementCustomizingAnnotation(AutoUpdateByPK.Factory.class)
+@SqlStatementCustomizingAnnotation(AutoSelectByPK.Factory.class)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface AutoUpdateByPK {
+public @interface AutoSelectByPK {
 
     Class<? extends TranslatingStrategyAware> translaterClass() default SnakeCaseTranslatingStrategy.class;
 
@@ -22,10 +22,10 @@ public @interface AutoUpdateByPK {
 
        public SqlStatementCustomizer createForMethod(Annotation annotation, Class sqlObjectType, Method method) {
 
-          AutoUpdateByPK anno = (AutoUpdateByPK) annotation;
+          AutoSelectByPK anno = (AutoSelectByPK) annotation;
           Class<?> beanType = Resolver.findBeanType(sqlObjectType, method);
           try {
-             final StatementRewriter rw = new AutoUpdateByPKWriter(anno.translaterClass(), beanType);
+             final StatementRewriter rw = new AutoSelectByPKWriter(anno.translaterClass(), beanType);
              return new SqlStatementCustomizer() {
                 public void apply(SQLStatement q) {
                    q.setStatementRewriter(rw);

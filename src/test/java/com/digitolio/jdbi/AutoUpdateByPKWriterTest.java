@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.sqlobject.BindBean;
+import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 
 public class AutoUpdateByPKWriterTest {
@@ -25,9 +26,13 @@ public class AutoUpdateByPKWriterTest {
 
     @Test
     public void testBeanMapperFactory() throws Exception {
-        BeanMappingDao db = dbi.onDemand(BeanMappingDao.class);
-        db.insertPerson(new Person(4249517, "Cemo", 2, 7));
+        PersonGenericDAO db = dbi.onDemand(PersonGenericDAO.class);
+        db.insert(new Person(4249517, "Cemo", 2, 7));
+        db.insert(new Person(33322211, "Omer", 1, 4));
         db.updateByPK(new Person(4249517, "Cemo2", null, 7));
+        Person person = db.selectByPK(new Person(33322211, null, null, null));
+        int count = db.deleteByPK(new Person(4249517, "Cemo2", null, 7));
+        System.out.println(count);
     }
 
     @After
@@ -36,11 +41,26 @@ public class AutoUpdateByPKWriterTest {
        handle.close();
     }
 
+    public static interface PersonGenericDAO extends GenericDAO<Person>{}
+
     public static interface BeanMappingDao {
+
+       @AutoDeleteByPK
+       @SqlUpdate
+       public Integer deleteByPK(@BindBean Person person);
 
        @AutoUpdateByPK
        @SqlUpdate
        public Integer updateByPK(@BindBean Person person);
+
+       @AutoInsert
+       @SqlUpdate
+       public Integer insert(@BindBean Person person);
+
+       @AutoSelectByPK
+       @MapResultForSnakeCaseAsBean
+       @SqlQuery
+       public Person selectByPK(@BindBean Person person);
 
        @SqlUpdate("insert into person (user_id, user_name, child_count, cousin_count) values (:userId, :userName, :childCount, :cousinCount)")
        public void insertPerson(@BindBean Person person);

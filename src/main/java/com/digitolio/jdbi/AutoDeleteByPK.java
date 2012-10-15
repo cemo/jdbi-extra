@@ -12,9 +12,9 @@ import java.lang.annotation.*;
 import java.lang.reflect.Method;
 
 @Retention(RetentionPolicy.RUNTIME)
-@SqlStatementCustomizingAnnotation(AutoUpdateByPK.Factory.class)
+@SqlStatementCustomizingAnnotation(AutoDeleteByPK.Factory.class)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface AutoUpdateByPK {
+public @interface AutoDeleteByPK {
 
     Class<? extends TranslatingStrategyAware> translaterClass() default SnakeCaseTranslatingStrategy.class;
 
@@ -22,10 +22,10 @@ public @interface AutoUpdateByPK {
 
        public SqlStatementCustomizer createForMethod(Annotation annotation, Class sqlObjectType, Method method) {
 
-          AutoUpdateByPK anno = (AutoUpdateByPK) annotation;
+          AutoDeleteByPK anno = (AutoDeleteByPK) annotation;
           Class<?> beanType = Resolver.findBeanType(sqlObjectType, method);
           try {
-             final StatementRewriter rw = new AutoUpdateByPKWriter(anno.translaterClass(), beanType);
+             final StatementRewriter rw = new AutoDeleteByPKWriter(anno.translaterClass(), beanType);
              return new SqlStatementCustomizer() {
                 public void apply(SQLStatement q) {
                    q.setStatementRewriter(rw);
@@ -35,6 +35,7 @@ public @interface AutoUpdateByPK {
              throw new IllegalStateException(e);
           }
        }
+
 
        public SqlStatementCustomizer createForType(Annotation annotation, Class sqlObjectType) {
           throw new IllegalStateException("Not defined on parameters!");

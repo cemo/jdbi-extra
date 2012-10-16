@@ -48,7 +48,7 @@ public class EnumTest {
         public void insertNewMatch(@BindBean Match match);
 
         @SqlQuery("select opponent, place from match where opponent = :team")
-        @MapResultForSnakeCaseAsBean
+        @StrategyAwareMapBean
         public Match findByName(@Bind("team") String team);
 
     }

@@ -24,9 +24,9 @@ public class TranslationAwareMapper<T> implements ResultSetMapper<T> {
 
     private final TranslatingStrategyAware translater;
 
-    public TranslationAwareMapper(Class<T> type, Class<? extends TranslatingStrategyAware> translaterClass) {
+    public TranslationAwareMapper(Class<T> type, TranslatingStrategyAware translater) {
         this.type = type;
-        this.translater = getTranslatingStrategyAwareInstance(translaterClass);
+        this.translater = translater;
         try {
             BeanInfo info = Introspector.getBeanInfo(type);
             for (PropertyDescriptor descriptor : info.getPropertyDescriptors()) {
@@ -109,16 +109,6 @@ public class TranslationAwareMapper<T> implements ResultSetMapper<T> {
         }
 
         return bean;
-    }
-
-    private TranslatingStrategyAware getTranslatingStrategyAwareInstance(Class<? extends TranslatingStrategyAware> translaterClass) {
-        try {
-            return translaterClass.newInstance();
-        } catch(InstantiationException e) {
-            throw new IllegalArgumentException("translaterClass could not be instantiated", e);
-        } catch(IllegalAccessException e) {
-            throw new IllegalArgumentException("translaterClass could not be instantiated", e);
-        }
     }
 }
 

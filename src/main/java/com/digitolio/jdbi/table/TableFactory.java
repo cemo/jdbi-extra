@@ -11,9 +11,9 @@ import java.util.Map;
 
 final class TableFactory {
 
-    Table newInstance(Connection con, TranslateTableBean translateTableBean) {
-        TranslatingStrategyAware translater = translateTableBean.getTranslater();
-        String tableDb = translater.getPropertyTranslatingStrategy().translate(translateTableBean.getType().getSimpleName());
+    Table newInstance(Connection con, TranslateTablePair translateTablePair) {
+        TranslatingStrategyAware translater = translateTablePair.getTranslater();
+        String tableDb = translater.getPropertyTranslatingStrategy().translate(translateTablePair.getType().getSimpleName());
         String tableCode = translater.getDbTranslatingStrategy().translate(tableDb);
 
         return new Table(

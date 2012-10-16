@@ -2,13 +2,13 @@ package com.digitolio.jdbi.table;
 
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 
-public class TranslateTableBean {
+public class TranslateTablePair {
 
     Class<?> type;
 
     TranslatingStrategyAware translater;
 
-    public TranslateTableBean(Class type, TranslatingStrategyAware translater) {
+    public TranslateTablePair(Class type, TranslatingStrategyAware translater) {
         this.type = type;
         this.translater = translater;
     }
@@ -39,7 +39,7 @@ public class TranslateTableBean {
             return false;
         }
 
-        TranslateTableBean that = (TranslateTableBean) o;
+        TranslateTablePair that = (TranslateTablePair) o;
 
         if (translater != null ? !translater.equals(that.translater) : that.translater != null) {
             return false;

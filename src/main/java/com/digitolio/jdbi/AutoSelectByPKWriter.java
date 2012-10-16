@@ -1,9 +1,10 @@
 package com.digitolio.jdbi;
 
+import com.digitolio.StrategyAwareDBI;
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import com.digitolio.jdbi.table.Table;
 import com.digitolio.jdbi.table.TableRegistry;
-import com.digitolio.jdbi.table.TranslateTableBean;
+import com.digitolio.jdbi.table.TranslateTablePair;
 import org.skife.jdbi.org.antlr.runtime.ANTLRStringStream;
 import org.skife.jdbi.org.antlr.runtime.Token;
 import org.skife.jdbi.rewriter.colon.ColonStatementLexer;
@@ -26,18 +27,17 @@ public class AutoSelectByPKWriter implements StatementRewriter {
 
     private Boolean initialized = false;
 
-    private TranslateTableBean translateTableBean;
+    private AutoSelectByPKGenerator sqlGenerator;
 
-    AutoSelectByPKGenerator sqlGenerator;
+    private Class<?> type;
 
-    public AutoSelectByPKWriter(Class<? extends TranslatingStrategyAware> translaterClass, Class<?> type) {
-        translateTableBean = new TranslateTableBean(type, getTranslatingStrategyAwareInstance(translaterClass));
-    }
+    public AutoSelectByPKWriter(Class<?> type) {this.type = type;}
 
     public RewrittenStatement rewrite(String sql, Binding params, StatementContext ctx) {
 
         if (!initialized) {
-            Table table = TableRegistry.getInstance().getTable(ctx.getConnection(), translateTableBean);
+            TranslatingStrategyAware translatingStrategyAware = (TranslatingStrategyAware) ctx.getAttribute(StrategyAwareDBI.TRANSLATING_STRATEGY);
+            Table table = TableRegistry.getInstance().getTable(ctx.getConnection(), new TranslateTablePair(type,translatingStrategyAware));
             sqlGenerator = new AutoSelectByPKGenerator(table);
             initialized = true;
         }
@@ -158,16 +158,6 @@ public class AutoSelectByPKWriter implements StatementRewriter {
 
         public void addPositionalParamAt() {
             params.add("*");
-        }
-    }
-
-    private TranslatingStrategyAware getTranslatingStrategyAwareInstance(Class<? extends TranslatingStrategyAware> translaterClass) {
-        try {
-            return translaterClass.newInstance();
-        } catch(InstantiationException e) {
-            throw new IllegalArgumentException("translaterClass could not be instantiated", e);
-        } catch(IllegalAccessException e) {
-            throw new IllegalArgumentException("translaterClass could not be instantiated", e);
         }
     }
 }

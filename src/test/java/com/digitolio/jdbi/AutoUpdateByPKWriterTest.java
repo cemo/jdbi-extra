@@ -1,5 +1,7 @@
 package com.digitolio.jdbi;
 
+import com.digitolio.StrategyAwareDBI;
+import com.digitolio.jdbi.strategy.SnakeCaseTranslatingStrategy;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.After;
 import org.junit.Before;
@@ -20,6 +22,7 @@ public class AutoUpdateByPKWriterTest {
        JdbcDataSource ds = new JdbcDataSource();
        ds.setURL("jdbc:h2:mem:test");
        dbi = new DBI(ds);
+       dbi.define(StrategyAwareDBI.TRANSLATING_STRATEGY, new SnakeCaseTranslatingStrategy());
        handle = dbi.open();
        handle.execute("create table person (user_id int primary key, user_name varchar(100) , child_count int, cousin_count int)");
     }
@@ -58,7 +61,7 @@ public class AutoUpdateByPKWriterTest {
        public Integer insert(@BindBean Person person);
 
        @AutoSelectByPK
-       @MapResultForSnakeCaseAsBean
+       @StrategyAwareMapBean
        @SqlQuery
        public Person selectByPK(@BindBean Person person);
 

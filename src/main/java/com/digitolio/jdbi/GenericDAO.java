@@ -18,7 +18,7 @@ public interface  GenericDAO<T>{
     public Integer insert(@BindBean T t);
 
     @AutoSelectByPK
-    @MapResultForSnakeCaseAsBean
+    @StrategyAwareMapBean
     @SqlQuery
     public T selectByPK(@BindBean T t);
 }

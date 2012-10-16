@@ -48,7 +48,7 @@ public class BeanMapperTest {
    public static interface BeanMappingDao {
 
       @SqlQuery("select user_id, user_name from beans where user_name = :name")
-      @MapResultForSnakeCaseAsBean
+      @StrategyAwareMapBean
       public Bean findByName(@Bind("name") String name);
 
       @SqlUpdate("insert into beans (user_id, user_name) values (:userId, :userName)")

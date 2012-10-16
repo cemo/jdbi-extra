@@ -11,7 +11,7 @@ public class TableRegistry {
 
     private final TableFactory tableFactory = new TableFactory();
 
-    private final ConcurrentHashMap<TranslateTableBean, Table> tables = new ConcurrentHashMap<TranslateTableBean, Table>();
+    private final ConcurrentHashMap<TranslateTablePair, Table> tables = new ConcurrentHashMap<TranslateTablePair, Table>();
 
     private TableRegistry() { }
 
@@ -20,11 +20,11 @@ public class TableRegistry {
     }
 
     public Table getTable(Connection con, Class type, TranslatingStrategyAware translater) {
-        TranslateTableBean key = new TranslateTableBean(type, translater);
+        TranslateTablePair key = new TranslateTablePair(type, translater);
         return getTable(con, key);
     }
 
-    public Table getTable(Connection con, TranslateTableBean key) {
+    public Table getTable(Connection con, TranslateTablePair key) {
         if (tables.containsKey(key)) {
             return tables.get(key);
         } else {

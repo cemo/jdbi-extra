@@ -1,7 +1,5 @@
 package com.digitolio.jdbi;
 
-import com.digitolio.jdbi.strategy.SnakeCaseTranslatingStrategy;
-import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import org.skife.jdbi.v2.SQLStatement;
 import org.skife.jdbi.v2.sqlobject.SqlStatementCustomizer;
 import org.skife.jdbi.v2.sqlobject.SqlStatementCustomizerFactory;
@@ -16,8 +14,6 @@ import java.lang.reflect.Method;
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface AutoDeleteByPK {
 
-    Class<? extends TranslatingStrategyAware> translaterClass() default SnakeCaseTranslatingStrategy.class;
-
     public static class Factory implements SqlStatementCustomizerFactory {
 
        public SqlStatementCustomizer createForMethod(Annotation annotation, Class sqlObjectType, Method method) {
@@ -25,7 +21,7 @@ public @interface AutoDeleteByPK {
           AutoDeleteByPK anno = (AutoDeleteByPK) annotation;
           Class<?> beanType = Resolver.findBeanType(sqlObjectType, method);
           try {
-             final StatementRewriter rw = new AutoDeleteByPKWriter(anno.translaterClass(), beanType);
+             final StatementRewriter rw = new AutoDeleteByPKWriter(beanType);
              return new SqlStatementCustomizer() {
                 public void apply(SQLStatement q) {
                    q.setStatementRewriter(rw);

@@ -1,7 +1,5 @@
 package com.digitolio.jdbi;
 
-import com.digitolio.jdbi.strategy.SnakeCaseTranslatingStrategy;
-import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import org.skife.jdbi.v2.Query;
 import org.skife.jdbi.v2.SQLStatement;
 import org.skife.jdbi.v2.sqlobject.SqlStatementCustomizer;
@@ -13,11 +11,9 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 @Retention(RetentionPolicy.RUNTIME)
-@SqlStatementCustomizingAnnotation(MapResultForSnakeCaseAsBean.MapAsBeanFactory.class)
+@SqlStatementCustomizingAnnotation(StrategyAwareMapBean.MapAsBeanFactory.class)
 @Target(ElementType.METHOD)
-public @interface MapResultForSnakeCaseAsBean {
-
-    Class<? extends TranslatingStrategyAware> translaterClass() default SnakeCaseTranslatingStrategy.class;
+public @interface StrategyAwareMapBean {
 
     public static class MapAsBeanFactory implements SqlStatementCustomizerFactory {
 
@@ -27,8 +23,7 @@ public @interface MapResultForSnakeCaseAsBean {
                 @Override
                 public void apply(SQLStatement s) throws SQLException {
                     Query q = (Query) s;
-                    Class<? extends TranslatingStrategyAware> translater = ((MapResultForSnakeCaseAsBean) annotation).translaterClass();
-                    q.registerMapper(new TranslationAwareBeanMapperFactory(translater));
+                    q.registerMapper(new TranslationAwareBeanMapperFactory());
                 }
             };
         }

@@ -11,8 +11,6 @@ public class StrategyAwareDBI extends DBI {
 
     public static final String TRANSLATING_STRATEGY = "TRANSLATING_STRATEGY";
 
-    TranslatingStrategyAware translatingStrategyAware;
-
     public StrategyAwareDBI(DataSource dataSource, TranslatingStrategyAware translater) {
         super(dataSource);
         define(TRANSLATING_STRATEGY,translater);

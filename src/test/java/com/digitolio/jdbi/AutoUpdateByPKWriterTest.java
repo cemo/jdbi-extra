@@ -21,8 +21,7 @@ public class AutoUpdateByPKWriterTest {
     public void setUp() throws Exception {
        JdbcDataSource ds = new JdbcDataSource();
        ds.setURL("jdbc:h2:mem:test");
-       dbi = new DBI(ds);
-       dbi.define(StrategyAwareDBI.TRANSLATING_STRATEGY, new SnakeCaseTranslatingStrategy());
+       dbi = new StrategyAwareDBI(ds,new SnakeCaseTranslatingStrategy());
        handle = dbi.open();
        handle.execute("create table person (user_id int primary key, user_name varchar(100) , child_count int, cousin_count int)");
     }

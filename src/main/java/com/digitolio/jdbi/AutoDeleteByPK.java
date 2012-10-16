@@ -18,7 +18,6 @@ public @interface AutoDeleteByPK {
 
        public SqlStatementCustomizer createForMethod(Annotation annotation, Class sqlObjectType, Method method) {
 
-          AutoDeleteByPK anno = (AutoDeleteByPK) annotation;
           Class<?> beanType = Resolver.findBeanType(sqlObjectType, method);
           try {
              final StatementRewriter rw = new AutoDeleteByPKWriter(beanType);

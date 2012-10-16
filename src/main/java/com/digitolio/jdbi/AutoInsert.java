@@ -18,7 +18,6 @@ public @interface AutoInsert {
 
        public SqlStatementCustomizer createForMethod(Annotation annotation, Class sqlObjectType, Method method) {
 
-          AutoInsert anno = (AutoInsert) annotation;
           Class<?> beanType = Resolver.findBeanType(sqlObjectType,method);
           try {
              final StatementRewriter rw = new AutoInsertWriter(beanType);

@@ -1,5 +1,7 @@
 package com.digitolio.jdbi;
 
+import com.digitolio.StrategyAwareDBI;
+import com.digitolio.jdbi.strategy.SnakeCaseTranslatingStrategy;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +26,7 @@ public class EnumTest {
     public void setUp() throws Exception {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:test");
-        dbi = new DBI(ds);
-
+        dbi = new StrategyAwareDBI(ds, new SnakeCaseTranslatingStrategy());
         dbi.registerArgumentFactory(new EnumArgumentFactory());
         handle = dbi.open();
         handle.execute("create table match (opponent varchar(100) primary key, place VARCHAR(64) CHECK place IN('AWAY', 'HOME'))");

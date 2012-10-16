@@ -18,7 +18,6 @@ public @interface AutoUpdateByPK {
 
        public SqlStatementCustomizer createForMethod(Annotation annotation, Class sqlObjectType, Method method) {
 
-          AutoUpdateByPK anno = (AutoUpdateByPK) annotation;
           Class<?> beanType = Resolver.findBeanType(sqlObjectType, method);
           try {
              final StatementRewriter rw = new AutoUpdateByPKWriter(beanType);

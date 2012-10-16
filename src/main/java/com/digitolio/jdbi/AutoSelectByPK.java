@@ -18,7 +18,6 @@ public @interface AutoSelectByPK {
 
        public SqlStatementCustomizer createForMethod(Annotation annotation, Class sqlObjectType, Method method) {
 
-          AutoSelectByPK anno = (AutoSelectByPK) annotation;
           Class<?> beanType = Resolver.findBeanType(sqlObjectType, method);
           try {
              final StatementRewriter rw = new AutoSelectByPKWriter(beanType);

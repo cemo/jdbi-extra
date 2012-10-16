@@ -1,5 +1,9 @@
+0.7.x
+  - Add AutoFind support
+
 0.6.x
   - Crud support
+  - Enrich test cases
 
 0.5.x
   - AutoUpdateByPK support

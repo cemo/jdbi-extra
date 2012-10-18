@@ -1,9 +1,16 @@
-0.6
+0.7.x
+  - Add AutoFind support
+
+0.6.x
   - Crud support
-0.5
-  - SelfUpdatable support
+  - Enrich test cases
+
+0.5.x
+  - AutoUpdateByPK support
+
 0.4
   - Enum support
   - Add test case for Snake Case
+
 0.3
   - Snake Case support

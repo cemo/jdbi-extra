@@ -1,6 +1,5 @@
 package com.digitolio.jdbi;
 
-import com.digitolio.StrategyAwareDBI;
 import com.digitolio.jdbi.strategy.SnakeCaseTranslatingStrategy;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.After;

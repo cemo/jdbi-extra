@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 @Retention(RetentionPolicy.RUNTIME)
 @SqlStatementCustomizingAnnotation(AutoInsert.Factory.class)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface AutoInsert {
+@interface AutoInsert {
 
     public static class Factory implements SqlStatementCustomizerFactory {
 

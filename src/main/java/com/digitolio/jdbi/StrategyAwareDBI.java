@@ -1,4 +1,4 @@
-package com.digitolio;
+package com.digitolio.jdbi;
 
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import org.skife.jdbi.v2.DBI;

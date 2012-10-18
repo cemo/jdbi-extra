@@ -5,6 +5,7 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 
 public interface  GenericDAO<T>{
+
     @AutoDeleteByPK
     @SqlUpdate
     public Integer deleteByPK(@BindBean T t);

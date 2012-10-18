@@ -1,6 +1,5 @@
 package com.digitolio.jdbi;
 
-import com.digitolio.StrategyAwareDBI;
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import org.skife.jdbi.v2.ResultSetMapperFactory;
 import org.skife.jdbi.v2.StatementContext;

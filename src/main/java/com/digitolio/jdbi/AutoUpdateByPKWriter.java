@@ -1,6 +1,5 @@
 package com.digitolio.jdbi;
 
-import com.digitolio.StrategyAwareDBI;
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import com.digitolio.jdbi.table.Table;
 import com.digitolio.jdbi.table.TableRegistry;

@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 @Retention(RetentionPolicy.RUNTIME)
 @SqlStatementCustomizingAnnotation(AutoDeleteByPK.Factory.class)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface AutoDeleteByPK {
+@interface AutoDeleteByPK {
 
     public static class Factory implements SqlStatementCustomizerFactory {
 

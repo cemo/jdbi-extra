@@ -22,10 +22,9 @@ final class TableFactory {
             .translate(translateTablePair.getType().getSimpleName());
 
         Map<String, String> columns = generateInfo(fetchAllColumns(con, tableDb), translateTablePair);
-        String tableCode = translater.getDbTranslatingStrategy().translate(tableDb);
         Map<String, String> primaryKeys = generateInfo(fetchPrimaryKeys(con, tableDb), translateTablePair);
 
-        return new Table(tableCode, tableDb, primaryKeys, columns);
+        return new Table(tableDb, primaryKeys, columns);
     }
 
     private ResultSet fetchAllColumns(Connection con, String table) {

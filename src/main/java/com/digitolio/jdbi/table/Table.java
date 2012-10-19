@@ -5,14 +5,12 @@ import java.util.Map;
 
 public final class Table {
 
-    private final String tableCode;
     private final String tableDb;
     private final Map<String, String> primaryKeys;
     private final Map<String, String> nonPrimaryKeys;
     private final Map<String, String> columns;
 
-    public Table(String tableCode, String tableDb, Map<String, String> primaryKeys, Map<String, String> columns) {
-        this.tableCode = tableCode;
+    public Table(String tableDb, Map<String, String> primaryKeys, Map<String, String> columns) {
         this.tableDb = tableDb;
         this.primaryKeys = primaryKeys;
         this.columns = columns;
@@ -25,10 +23,6 @@ public final class Table {
             map.remove(s);
         }
         return map;
-    }
-
-    public String getTableCode() {
-        return tableCode;
     }
 
     public String getTableDb() {

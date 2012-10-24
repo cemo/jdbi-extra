@@ -1,6 +1,5 @@
 package com.digitolio.jdbi;
 
-import com.digitolio.jdbi.strategy.SnakeCaseTranslatingStrategy;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +19,7 @@ public class SnakeCaseGenericDAOTest {
     public void setUp() throws Exception {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:test");
-        dbi = new StrategyAwareDBI(ds, new SnakeCaseTranslatingStrategy());
+        dbi = StrategyAwareDBI.enhanceDBIForSnakeCase(new DBI(ds));
         handle = dbi.open();
         handle.execute("create table person (user_id int primary key, user_name varchar(100) , child_count int, cousin_count int)");
     }
@@ -28,8 +27,8 @@ public class SnakeCaseGenericDAOTest {
     @Test
     public void testBeanMapperFactory() throws Exception {
         PersonGenericDAO db = dbi.onDemand(PersonGenericDAO.class);
-        Integer insertCount = db.insert(new Person(4249517, "Cemo", 2, 7));
-        assertThat(insertCount).isEqualTo(1);
+        Long insertCount = db.insert(new Person(4249517, "Cemo", 2, 7));
+        assertThat(insertCount).isNull();
 
         Integer updateCount = db.updateByPK(new Person(4249517, "Cemalettin Koc", null, 7));
         assertThat(updateCount).isEqualTo(1);

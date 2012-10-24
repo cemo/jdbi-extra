@@ -3,25 +3,30 @@ package com.digitolio.jdbi;
 /**
  *
  */
-public class SomeThing {
-   private int id;
+public class Something {
+   private Integer id;
    private String name;
    private String username;
 
-   public SomeThing() {
+   public Something() {
    }
 
-   public SomeThing(int id, String name, String username) {
+   public Something(Integer id, String name, String username) {
       this.id = id;
       this.name = name;
       this.username = username;
    }
 
-   public int getId() {
+   public Something(String name, String username) {
+      this.name = name;
+      this.username = username;
+   }
+
+   public Integer getId() {
       return id;
    }
 
-   public void setId(int id) {
+   public void setId(Integer id) {
       this.id = id;
    }
 
@@ -46,11 +51,11 @@ public class SomeThing {
       if(this == o) return true;
       if(o == null || getClass() != o.getClass()) return false;
 
-      SomeThing someThing = (SomeThing) o;
+      Something something = (Something) o;
 
-      if(id != someThing.id) return false;
-      if(name != null ? !name.equals(someThing.name) : someThing.name != null) return false;
-      if(username != null ? !username.equals(someThing.username) : someThing.username != null) return false;
+      if(id != something.id) return false;
+      if(name != null ? !name.equals(something.name) : something.name != null) return false;
+      if(username != null ? !username.equals(something.username) : something.username != null) return false;
 
       return true;
    }

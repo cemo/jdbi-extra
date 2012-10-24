@@ -1,10 +1,11 @@
 package com.digitolio.jdbi;
 
 import org.skife.jdbi.v2.sqlobject.BindBean;
+import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 
-public interface  GenericDAO<T>{
+public interface GenericDAO<T>{
 
     @AutoDeleteByPK
     @SqlUpdate
@@ -15,8 +16,9 @@ public interface  GenericDAO<T>{
     public Integer updateByPK(@BindBean T t);
 
     @AutoInsert
+    @GetGeneratedKeys
     @SqlUpdate
-    public Integer insert(@BindBean T t);
+    public Long insert(@BindBean T t);
 
     @AutoSelectByPK
     @StrategyAwareMapBean

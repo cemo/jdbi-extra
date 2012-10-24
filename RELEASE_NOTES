@@ -4,6 +4,7 @@
 0.6.x
   - Crud support
   - Enrich test cases
+  - Add error messages for illegal usages
 
 0.5.x
   - AutoUpdateByPK support

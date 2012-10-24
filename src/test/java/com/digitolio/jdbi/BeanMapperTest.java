@@ -1,6 +1,5 @@
 package com.digitolio.jdbi;
 
-import com.digitolio.jdbi.strategy.SnakeCaseTranslatingStrategy;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.After;
 import org.junit.Before;
@@ -23,9 +22,8 @@ public class BeanMapperTest {
    public void setUp() throws Exception {
       JdbcDataSource ds = new JdbcDataSource();
       ds.setURL("jdbc:h2:mem:test");
-      dbi = new StrategyAwareDBI(ds, new SnakeCaseTranslatingStrategy());
+      dbi = StrategyAwareDBI.enhanceDBIForSnakeCase(new DBI(ds));
       handle = dbi.open();
-
       handle.execute("create table beans (user_id int primary key, user_name varchar(100))");
    }
 

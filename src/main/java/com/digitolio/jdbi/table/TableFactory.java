@@ -18,6 +18,10 @@ final class TableFactory {
     Table newInstance(Connection con, TranslateTablePair translateTablePair) {
         TranslatingStrategyAware translater = translateTablePair.getTranslater();
 
+        if(translater==null){
+            throw new IllegalArgumentException("In order to use a AutoXXX methods, please define a Translater Strategy for JDBI.");
+        }
+
         String tableDb = translater.getPropertyTranslatingStrategy()
             .translate(translateTablePair.getType().getSimpleName());
 

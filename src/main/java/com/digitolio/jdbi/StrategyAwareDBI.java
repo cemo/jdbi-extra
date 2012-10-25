@@ -1,5 +1,6 @@
 package com.digitolio.jdbi;
 
+import com.digitolio.jdbi.strategy.DefaultTranslatingStrategy;
 import com.digitolio.jdbi.strategy.SnakeCaseTranslatingStrategy;
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import org.skife.jdbi.v2.DBI;
@@ -7,6 +8,10 @@ import org.skife.jdbi.v2.DBI;
 public class StrategyAwareDBI{
 
     public static final String TRANSLATING_STRATEGY = "TRANSLATING_STRATEGY";
+
+    public static DBI enhanceDBI(DBI dbi){
+        return enhanceDBI(dbi, new DefaultTranslatingStrategy());
+    }
 
     public static DBI enhanceDBIForSnakeCase(DBI dbi){
         return enhanceDBI(dbi, new SnakeCaseTranslatingStrategy());

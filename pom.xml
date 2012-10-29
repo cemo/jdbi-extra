@@ -11,7 +11,7 @@
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-      <jdbi.version>2.40</jdbi.version>
+      <jdbi.version>2.41</jdbi.version>
       <junit.version>4.11-beta-1</junit.version>
       <mockito-all.version>1.9.5</mockito-all.version>
       <fest-assert-core.version>2.0M8</fest-assert-core.version>

@@ -1,43 +1,52 @@
 package com.digitolio.jdbi.table;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class Table {
 
-    private final String tableDb;
-    private final Map<String, String> primaryKeys;
-    private final Map<String, String> nonPrimaryKeys;
-    private final Map<String, String> columns;
+    private final String tableName;
+    private final List<Column> primaryKeyColumns;
+    private final List<Column> nonPrimaryKeyColumns;
+    private final List<Column> allColumns;
+    private final Map<String, Column> allColumnsMap;
 
-    public Table(String tableDb, Map<String, String> primaryKeys, Map<String, String> columns) {
-        this.tableDb = tableDb;
-        this.primaryKeys = primaryKeys;
-        this.columns = columns;
-        nonPrimaryKeys = diffMaps(columns, primaryKeys);
+    public Table(String tableName, List<Column> allColumns, List<Column> primaryKeyColumns) {
+        this.tableName = tableName;
+        this.primaryKeyColumns = primaryKeyColumns;
+        this.allColumns = allColumns;
+        this.allColumnsMap = transformToMap(allColumns);
+        this.nonPrimaryKeyColumns = new ArrayList<Column>(allColumns);
+        nonPrimaryKeyColumns.removeAll(primaryKeyColumns);
     }
 
-    private Map<String, String> diffMaps(Map<String, String> columns, Map<String, String> primaryKeys) {
-        HashMap<String, String> map= new HashMap<String, String>(columns);
-        for (String s : primaryKeys.keySet()) {
-            map.remove(s);
+    private Map<String, Column> transformToMap(List<Column> pkColumns) {
+        HashMap<String, Column> map = new HashMap<String, Column>();
+        for (Column pkColumn : pkColumns) {
+            map.put(pkColumn.getDatabaseName(), pkColumn);
         }
         return map;
     }
 
-    public String getTableDb() {
-        return tableDb;
+    public String getTableName() {
+        return tableName;
     }
 
-    public Map<String, String> getPrimaryKeys() {
-        return primaryKeys;
+    public List<Column> getAllColumns() {
+        return allColumns;
     }
 
-    public Map<String, String> getColumns() {
-        return columns;
+    public List<Column> getPrimaryKeyColumns() {
+        return primaryKeyColumns;
     }
 
-    public Map<String, String> getNonPrimaryKeys() {
-        return nonPrimaryKeys;
+    public List<Column> getNonPrimaryKeyColumns() {
+        return nonPrimaryKeyColumns;
+    }
+
+    public Column getColumnByDatabaseColumnName(String databaseColumnName) {
+        return allColumnsMap.get(databaseColumnName);
     }
 }

@@ -1,5 +1,9 @@
 package com.digitolio.jdbi;
 
+import com.digitolio.jdbi.annotations.AutoDeleteByPK;
+import com.digitolio.jdbi.annotations.AutoInsert;
+import com.digitolio.jdbi.annotations.AutoSelectByPK;
+import com.digitolio.jdbi.annotations.AutoUpdateByPK;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;

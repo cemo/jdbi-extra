@@ -1,5 +1,6 @@
-package com.digitolio.jdbi;
+package com.digitolio.jdbi.auto;
 
+import com.digitolio.jdbi.StrategyAwareDBI;
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import com.digitolio.jdbi.table.Table;
 import com.digitolio.jdbi.table.TableRegistry;
@@ -22,22 +23,24 @@ import java.util.List;
 
 import static org.skife.jdbi.rewriter.colon.ColonStatementLexer.*;
 
-public class AutoSelectByPKWriter implements StatementRewriter {
+public class AutoUpdateByPKWriter implements StatementRewriter {
 
     private Boolean initialized = false;
 
-    private AutoSelectByPKGenerator sqlGenerator;
+    private SqlUpdateByPK sqlGenerator;
 
     private Class<?> type;
 
-    public AutoSelectByPKWriter(Class<?> type) {this.type = type;}
+    public AutoUpdateByPKWriter(Class<?> type) {
+        this.type = type;
+    }
 
     public RewrittenStatement rewrite(String sql, Binding params, StatementContext ctx) {
 
         if (!initialized) {
-            TranslatingStrategyAware translatingStrategyAware = (TranslatingStrategyAware) ctx.getAttribute(StrategyAwareDBI.TRANSLATING_STRATEGY);
-            Table table = TableRegistry.getInstance().getTable(ctx.getConnection(), new TranslateTablePair(type,translatingStrategyAware));
-            sqlGenerator = new AutoSelectByPKGenerator(table);
+            TranslatingStrategyAware attribute = (TranslatingStrategyAware) ctx.getAttribute(StrategyAwareDBI.TRANSLATING_STRATEGY);
+            Table table = TableRegistry.getInstance().getTable(new TranslateTablePair(type, attribute));
+            sqlGenerator = new SqlUpdateByPK(table);
             initialized = true;
         }
         final ParsedStatement stmt = new ParsedStatement();
@@ -83,7 +86,6 @@ public class AutoSelectByPKWriter implements StatementRewriter {
         }
         return b.toString();
     }
-
 
     private static class MyRewrittenStatement implements RewrittenStatement {
         private final String sql;

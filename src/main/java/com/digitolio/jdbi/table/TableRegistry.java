@@ -2,14 +2,13 @@ package com.digitolio.jdbi.table;
 
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 
-import java.sql.Connection;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TableRegistry {
 
     private final static TableRegistry SINGLETON = new TableRegistry();
 
-    private final TableFactory tableFactory = new TableFactory();
+    private final TableResolver tableFactory = new TableResolver();
 
     private final ConcurrentHashMap<TranslateTablePair, Table> tables = new ConcurrentHashMap<TranslateTablePair, Table>();
 
@@ -19,16 +18,16 @@ public class TableRegistry {
         return SINGLETON;
     }
 
-    public Table getTable(Connection con, Class type, TranslatingStrategyAware translater) {
+    public Table getTable(Class type, TranslatingStrategyAware translater) {
         TranslateTablePair key = new TranslateTablePair(type, translater);
-        return getTable(con, key);
+        return getTable(key);
     }
 
-    public Table getTable(Connection con, TranslateTablePair key) {
+    public Table getTable( TranslateTablePair key) {
         if (tables.containsKey(key)) {
             return tables.get(key);
         } else {
-            Table table = tableFactory.newInstance(con, key);
+            Table table = tableFactory.resolve(key.getType(), key.getTranslater());
             tables.put(key, table);
             return table;
         }

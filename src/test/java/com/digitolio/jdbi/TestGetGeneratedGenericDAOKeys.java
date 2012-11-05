@@ -22,7 +22,7 @@ public class TestGetGeneratedGenericDAOKeys {
         ds.setURL("jdbc:h2:mem:test");
         dbi = StrategyAwareDBI.enhanceDBIForSnakeCase(new DBI(ds));
         handle = dbi.open();
-        handle.execute("create table some_thing (id identity primary key, name varchar(32))");
+        handle.execute("create table some_thing (id identity primary key, name varchar(32), username varchar(32))");
     }
 
     @After

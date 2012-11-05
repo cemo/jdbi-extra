@@ -1,5 +1,6 @@
 package com.digitolio.jdbi;
 
+import com.digitolio.jdbi.annotations.PK;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.After;
 import org.junit.Before;
@@ -52,6 +53,7 @@ public class SnakeCaseGenericDAOTest {
     public static interface PersonGenericDAO extends GenericDAO<Person> {}
 
     public static class Person {
+        @PK
         private Integer userId;
         private String userName;
         private Integer childCount;

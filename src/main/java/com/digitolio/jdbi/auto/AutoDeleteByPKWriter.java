@@ -1,5 +1,6 @@
-package com.digitolio.jdbi;
+package com.digitolio.jdbi.auto;
 
+import com.digitolio.jdbi.StrategyAwareDBI;
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
 import com.digitolio.jdbi.table.Table;
 import com.digitolio.jdbi.table.TableRegistry;
@@ -27,7 +28,7 @@ public class AutoDeleteByPKWriter implements StatementRewriter {
     private Boolean initialized = false;
 
 
-    AutoDeleteByPKGenerator sqlGenerator;
+    SqlDeleteByPk sqlGenerator;
     private Class<?> type;
 
     public AutoDeleteByPKWriter(Class<?> type) {
@@ -37,8 +38,8 @@ public class AutoDeleteByPKWriter implements StatementRewriter {
     public RewrittenStatement rewrite(String sql, Binding params, StatementContext ctx) {
         if (!initialized) {
             TranslatingStrategyAware attribute = (TranslatingStrategyAware) ctx.getAttribute(StrategyAwareDBI.TRANSLATING_STRATEGY);
-            Table table = TableRegistry.getInstance().getTable(ctx.getConnection(), new TranslateTablePair(type, attribute));
-            sqlGenerator = new AutoDeleteByPKGenerator(table);
+            Table table = TableRegistry.getInstance().getTable(new TranslateTablePair(type, attribute));
+            sqlGenerator = new SqlDeleteByPk(table);
             initialized = true;
         }
         final ParsedStatement stmt = new ParsedStatement();

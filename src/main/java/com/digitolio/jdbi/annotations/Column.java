@@ -9,4 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Column {
     boolean nullable() default false;
+
+    String defaultValue() default defaultValueConstant ;
+
+    final static String defaultValueConstant = "$#!!#$";
 }

@@ -12,6 +12,7 @@ public @interface CodeGen {
     public final static String CODE_GEN = "code-gen";
     public final static String DDL_GEN = "ddl-gen";
     public final static String ALL = "all";
+    public final static String NONE = "none";
 
-    String[] ignore() default {ALL};
+    String[] ignore() default {NONE};
 }

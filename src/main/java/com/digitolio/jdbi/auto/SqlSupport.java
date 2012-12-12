@@ -11,13 +11,13 @@ import java.util.List;
  */
 public abstract class SqlSupport implements SqlGenerator {
 
-    Table table;
+    protected Table table;
 
-    SqlSupport(Table table) {
+    public SqlSupport(Table table) {
         this.table = table;
     }
 
-    String getWherePart() {
+    public String getWherePart() {
         List<Column> primaryKeys = table.getPrimaryKeyColumns();
         StringBuilder builder = new StringBuilder(" WHERE ");
         for (Column entry : primaryKeys) {
@@ -27,7 +27,7 @@ public abstract class SqlSupport implements SqlGenerator {
     }
 
 
-    String getTableName() {
+    public String getTableName() {
         return table.getTableName();
     }
 

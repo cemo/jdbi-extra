@@ -85,7 +85,13 @@ public class TranslationAwareMapper<T> implements ResultSetMapper<T> {
                 } else if (type.isAssignableFrom(String.class)) {
                     value = rs.getString(i);
                 } else if (type.isEnum()) {
-                    value = Enum.valueOf((Class<? extends Enum>) type, rs.getString(i));
+                    String enumVal = rs.getString(i);
+                    if(enumVal == null || "".equals(enumVal) ){
+                        value = null;
+                    }else{
+                        value = Enum.valueOf((Class<? extends Enum>) type, enumVal);
+                    }
+
                 } else {
                     value = rs.getObject(i);
                 }

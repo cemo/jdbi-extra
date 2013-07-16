@@ -1,9 +1,12 @@
 package com.digitolio.jdbi;
 
+import com.digitolio.jdbi.annotations.PK;
+
 /**
  *
  */
 public class SomeThing {
+   @PK
    private Integer id;
    private String name;
    private String username;

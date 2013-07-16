@@ -45,9 +45,11 @@ public class SqlUpdateByPK extends SqlSupport {
         for (Column entry : nonPrimaryKeyColumns) {
             String input = entry.getFieldName();
             Argument argument = params.forName(input);
-            if(argument !=null && !"null".equals(argument.toString())){
+
+
+//            if(!entry.isNullable() ||  (argument !=null && !"null".equals(argument.toString()))){
                 builder.append(entry.getDatabaseName()).append(" = :").append(input).append(" , ");
-            }
+//            }
         }
         String set = builder.substring(0, builder.length() - 2);
         return String.format(clause,set);

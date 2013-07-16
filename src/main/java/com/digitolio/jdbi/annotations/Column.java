@@ -8,9 +8,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Column {
-    boolean nullable() default false;
+    boolean nullable() default defaultNullable;
 
     String defaultValue() default defaultValueConstant ;
 
     final static String defaultValueConstant = "$#!!#$";
+
+    final static boolean defaultNullable = false;
 }

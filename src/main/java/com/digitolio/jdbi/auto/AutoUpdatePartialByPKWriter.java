@@ -2,9 +2,6 @@ package com.digitolio.jdbi.auto;
 
 import com.digitolio.jdbi.StrategyAwareDBI;
 import com.digitolio.jdbi.strategy.TranslatingStrategyAware;
-import com.digitolio.jdbi.table.Table;
-import com.digitolio.jdbi.table.TableRegistry;
-import com.digitolio.jdbi.table.TranslateTablePair;
 import org.skife.jdbi.org.antlr.runtime.ANTLRStringStream;
 import org.skife.jdbi.org.antlr.runtime.Token;
 import org.skife.jdbi.rewriter.colon.ColonStatementLexer;
@@ -25,25 +22,13 @@ import static org.skife.jdbi.rewriter.colon.ColonStatementLexer.*;
 
 public class AutoUpdatePartialByPKWriter implements StatementRewriter {
 
-    private Boolean initialized = false;
-
-    private SqlUpdateByPK sqlGenerator;
-
-    private Class<?> type;
-
-    public AutoUpdatePartialByPKWriter(Class<?> type) {
-        this.type = type;
-    }
-
     public RewrittenStatement rewrite(String sql, Binding params, StatementContext ctx) {
 
-        if (!initialized) {
-            TranslatingStrategyAware attribute = (TranslatingStrategyAware) ctx.getAttribute(StrategyAwareDBI.TRANSLATING_STRATEGY);
-            Table table = TableRegistry.getInstance().getTable(new TranslateTablePair(type, attribute));
-            sqlGenerator = new SqlUpdateByPK(table);
-            initialized = true;
-        }
-        final ParsedStatement stmt = new ParsedStatement();
+       Class<?> aClass = SqlFactory.getClass(params);
+       TranslatingStrategyAware attribute = (TranslatingStrategyAware) ctx.getAttribute(StrategyAwareDBI.TRANSLATING_STRATEGY);
+       SqlPartialUpdateByPK sqlGenerator = SqlFactory.partialUpdate(aClass, attribute);
+
+       final ParsedStatement stmt = new ParsedStatement();
         try {
             String newSql = parseString(sqlGenerator.generate(params), stmt);
             return new MyRewrittenStatement(newSql, stmt, ctx);

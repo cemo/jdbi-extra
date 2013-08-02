@@ -34,6 +34,9 @@ public class AutoSelectByPKWriter implements StatementRewriter {
     public AutoSelectByPKWriter(Class<?> type) {this.type = type;}
 
     public RewrittenStatement rewrite(String sql, Binding params, StatementContext ctx) {
+       Argument argument = params.forPosition(0);
+
+//       SqlFactory.insert()
 
         if (!initialized) {
             TranslatingStrategyAware translatingStrategyAware = (TranslatingStrategyAware) ctx.getAttribute(

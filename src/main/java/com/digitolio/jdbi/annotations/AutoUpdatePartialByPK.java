@@ -1,7 +1,6 @@
 package com.digitolio.jdbi.annotations;
 
 import com.digitolio.jdbi.auto.AutoUpdatePartialByPKWriter;
-import com.digitolio.jdbi.support.Resolver;
 import org.skife.jdbi.v2.SQLStatement;
 import org.skife.jdbi.v2.sqlobject.SqlStatementCustomizer;
 import org.skife.jdbi.v2.sqlobject.SqlStatementCustomizerFactory;
@@ -20,9 +19,9 @@ public @interface AutoUpdatePartialByPK {
 
        public SqlStatementCustomizer createForMethod(Annotation annotation, Class sqlObjectType, Method method) {
 
-          Class<?> beanType = Resolver.findBeanType(sqlObjectType, method);
+//          Class<?> beanType = Resolver.findBeanType(sqlObjectType, method);
           try {
-             final StatementRewriter rw = new AutoUpdatePartialByPKWriter(beanType);
+             final StatementRewriter rw = new AutoUpdatePartialByPKWriter();
              return new SqlStatementCustomizer() {
                 public void apply(SQLStatement q) {
                    q.setStatementRewriter(rw);

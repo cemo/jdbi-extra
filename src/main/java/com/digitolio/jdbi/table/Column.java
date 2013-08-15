@@ -13,10 +13,13 @@ public class Column {
 
    private boolean nullable;
 
-   public Column(Field field, String databaseName, boolean nullable) {
+   private String unique;
+
+   public Column(Field field, String databaseName, boolean nullable, String unique) {
       this.field = field;
       this.databaseName = databaseName;
       this.nullable = nullable;
+      this.unique = unique;
    }
 
    public Field getField() {
@@ -45,5 +48,13 @@ public class Column {
 
    public void setNullable(boolean nullable) {
       this.nullable = nullable;
+   }
+
+   public String getUnique() {
+      return unique;
+   }
+
+   public void setUnique(String unique) {
+      this.unique = unique;
    }
 }

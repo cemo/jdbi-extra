@@ -11,12 +11,14 @@ public final class Table {
     private final List<Column> primaryKeyColumns;
     private final List<Column> nonPrimaryKeyColumns;
     private final List<Column> allColumns;
+    private final Map<String,List<Column>> uniqueIndexes;
     private final Map<String, Column> allColumnsMap;
 
-    public Table(String tableName, List<Column> allColumns, List<Column> primaryKeyColumns) {
+    public Table(String tableName, List<Column> allColumns, List<Column> primaryKeyColumns, Map<String, List<Column>> uniqueIndexes) {
         this.tableName = tableName;
         this.primaryKeyColumns = primaryKeyColumns;
         this.allColumns = allColumns;
+        this.uniqueIndexes = uniqueIndexes;
         this.allColumnsMap = transformToMap(allColumns);
         this.nonPrimaryKeyColumns = new ArrayList<Column>(allColumns);
         nonPrimaryKeyColumns.removeAll(primaryKeyColumns);
@@ -49,4 +51,8 @@ public final class Table {
     public Column getColumnByDatabaseColumnName(String databaseColumnName) {
         return allColumnsMap.get(databaseColumnName);
     }
+
+   public Map<String, List<Column>> getUniqueIndexes() {
+      return uniqueIndexes;
+   }
 }

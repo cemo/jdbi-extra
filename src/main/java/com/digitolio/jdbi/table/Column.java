@@ -13,9 +13,9 @@ public class Column {
 
    private boolean nullable;
 
-   private String unique;
+   private String[] unique;
 
-   public Column(Field field, String databaseName, boolean nullable, String unique) {
+   public Column(Field field, String databaseName, boolean nullable, String[] unique) {
       this.field = field;
       this.databaseName = databaseName;
       this.nullable = nullable;
@@ -50,11 +50,11 @@ public class Column {
       this.nullable = nullable;
    }
 
-   public String getUnique() {
+   public String[] getUnique() {
       return unique;
    }
 
-   public void setUnique(String unique) {
+   public void setUnique(String[] unique) {
       this.unique = unique;
    }
 }

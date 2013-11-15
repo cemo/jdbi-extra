@@ -13,7 +13,7 @@ public @interface Column {
 
     String defaultValue() default defaultValueConstant ;
 
-    String unique() default "" ;
+    String[] unique() default {} ;
 
     final static String defaultValueConstant = "$#!!#$";
 

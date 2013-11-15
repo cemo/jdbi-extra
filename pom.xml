@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.digitolio</groupId>
    <artifactId>jdbi-extra</artifactId>
-   <version>0.7.3-SNAPSHOT</version>
+   <version>0.7.5-SNAPSHOT</version>
    <name>${project.groupId}:${project.artifactId}:${project.version}</name>
    <description>JDBI extra</description>
    <url>http://github.com/cemo/jdbi-extra/</url>
@@ -11,7 +11,7 @@
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-      <jdbi.version>2.49</jdbi.version>
+      <jdbi.version>2.50</jdbi.version>
       <junit.version>4.11-beta-1</junit.version>
       <mockito-all.version>1.9.5</mockito-all.version>
       <fest-assert-core.version>2.0M8</fest-assert-core.version>

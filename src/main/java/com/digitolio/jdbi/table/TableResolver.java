@@ -38,20 +38,18 @@ public class TableResolver {
       for(Field field : list) {
          com.digitolio.jdbi.annotations.Column annotation = field.getAnnotation(com.digitolio.jdbi.annotations.Column.class);
          if(annotation == null) continue;
-         String unique = annotation.unique();
-         if("".equals(unique)) continue;
-         List<Column> columns = map.get(unique);
-         if(columns == null){
-            columns = new ArrayList<>();
-
-            map.put(unique, columns);
+         String[] unique = annotation.unique();
+         if(unique.length == 0) continue;
+         for(String i : unique) {
+            List<Column> columns = map.get(i);
+            if(columns == null){
+               columns = new ArrayList<>();
+               map.put(i, columns);
+            }
+            columns.add(new Column(field, fieldTranslatingStrategy.translate(field.getName()), annotation.nullable(), unique));
          }
-
-         columns.add(new Column(field, fieldTranslatingStrategy.translate(field.getName()), annotation.nullable(), unique));
-
       }
       return map;
-
    }
 
    private List<Column> getColumns(List<Field> list, TranslatingStrategy fieldTranslatingStrategy) {
@@ -60,7 +58,7 @@ public class TableResolver {
 
          com.digitolio.jdbi.annotations.Column annotation = field.getAnnotation(com.digitolio.jdbi.annotations.Column.class);
          boolean nullable = annotation != null ? annotation.nullable() : com.digitolio.jdbi.annotations.Column.defaultNullable;
-         String  unique = annotation == null || annotation.unique().equals(com.digitolio.jdbi.annotations.Column.defaultValueConstant)  ? "" : annotation.unique();
+         String[] unique = annotation == null || annotation.unique().length == 0  ? new String[]{} : annotation.unique();
          allColumns.add(new Column(field, fieldTranslatingStrategy.translate(field.getName()), nullable, unique));
       }
       return allColumns;

@@ -7,52 +7,64 @@ import java.util.Map;
 
 public final class Table {
 
-    private final String tableName;
-    private final List<Column> primaryKeyColumns;
-    private final List<Column> nonPrimaryKeyColumns;
-    private final List<Column> allColumns;
-    private final Map<String,List<Column>> uniqueIndexes;
-    private final Map<String, Column> allColumnsMap;
+   private final String tableName;
 
-    public Table(String tableName, List<Column> allColumns, List<Column> primaryKeyColumns, Map<String, List<Column>> uniqueIndexes) {
-        this.tableName = tableName;
-        this.primaryKeyColumns = primaryKeyColumns;
-        this.allColumns = allColumns;
-        this.uniqueIndexes = uniqueIndexes;
-        this.allColumnsMap = transformToMap(allColumns);
-        this.nonPrimaryKeyColumns = new ArrayList<Column>(allColumns);
-        nonPrimaryKeyColumns.removeAll(primaryKeyColumns);
-    }
+   private final List<Column> primaryKeyColumns;
 
-    private Map<String, Column> transformToMap(List<Column> pkColumns) {
-        HashMap<String, Column> map = new HashMap<String, Column>();
-        for (Column pkColumn : pkColumns) {
-            map.put(pkColumn.getDatabaseName(), pkColumn);
-        }
-        return map;
-    }
+   private final List<Column> nonPrimaryKeyColumns;
 
-    public String getTableName() {
-        return tableName;
-    }
+   private final List<Column> allColumns;
 
-    public List<Column> getAllColumns() {
-        return allColumns;
-    }
+   private final Map<String, List<Column>> uniqueIndexes;
 
-    public List<Column> getPrimaryKeyColumns() {
-        return primaryKeyColumns;
-    }
+   private Map<String, List<Column>> indexes;
 
-    public List<Column> getNonPrimaryKeyColumns() {
-        return nonPrimaryKeyColumns;
-    }
+   private final Map<String, Column> allColumnsMap;
 
-    public Column getColumnByDatabaseColumnName(String databaseColumnName) {
-        return allColumnsMap.get(databaseColumnName);
-    }
+   public Table(String tableName, List<Column> allColumns, List<Column> primaryKeyColumns, Map<String, List<Column>> uniqueIndexes, Map<String, List<Column>> indexes) {
+      this.tableName = tableName;
+      this.primaryKeyColumns = primaryKeyColumns;
+      this.allColumns = allColumns;
+      this.uniqueIndexes = uniqueIndexes;
+      this.indexes = indexes;
+      this.allColumnsMap = transformToMap(allColumns);
+      this.nonPrimaryKeyColumns = new ArrayList<Column>(allColumns);
+      nonPrimaryKeyColumns.removeAll(primaryKeyColumns);
+   }
+
+   private Map<String, Column> transformToMap(List<Column> pkColumns) {
+      HashMap<String, Column> map = new HashMap<String, Column>();
+      for(Column pkColumn : pkColumns) {
+         map.put(pkColumn.getDatabaseName(), pkColumn);
+      }
+      return map;
+   }
+
+   public String getTableName() {
+      return tableName;
+   }
+
+   public List<Column> getAllColumns() {
+      return allColumns;
+   }
+
+   public List<Column> getPrimaryKeyColumns() {
+      return primaryKeyColumns;
+   }
+
+   public List<Column> getNonPrimaryKeyColumns() {
+      return nonPrimaryKeyColumns;
+   }
+
+   public Column getColumnByDatabaseColumnName(String databaseColumnName) {
+      return allColumnsMap.get(databaseColumnName);
+   }
 
    public Map<String, List<Column>> getUniqueIndexes() {
       return uniqueIndexes;
+   }
+
+   public Map<String, List<Column>> getIndexes() {
+      return indexes;
    }
 }

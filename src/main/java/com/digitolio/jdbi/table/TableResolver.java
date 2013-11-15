@@ -22,31 +22,45 @@ public class TableResolver {
 
       List<Column> pkColumns = getPkColumns(list, fieldTranslatingStrategy);
 
-      Map<String, List<Column>> uniqueIndexes = getUniqueIndexes(list, fieldTranslatingStrategy);
+      Map<String, List<Column>> uniqueIndexes = getUniqueIndexes(allColumns);
+      Map<String, List<Column>> indexes = getIndexes(allColumns);
 
       com.digitolio.jdbi.annotations.Table tableAnnotation = type.getAnnotation(com.digitolio.jdbi.annotations.Table.class);
       String tableName = tableAnnotation != null ?
                             tableAnnotation.name() :
                             fieldTranslatingStrategy.translate(type.getSimpleName());
 
-      return new Table(tableName, allColumns, pkColumns, uniqueIndexes);
+      return new Table(tableName, allColumns, pkColumns, uniqueIndexes, indexes);
    }
 
-   private Map<String, List<Column>> getUniqueIndexes(List<Field> list, TranslatingStrategy fieldTranslatingStrategy) {
-
+   private Map<String, List<Column>> getUniqueIndexes(List<Column> allColumns) {
       Map<String, List<Column>> map = new HashMap<>();
-      for(Field field : list) {
-         com.digitolio.jdbi.annotations.Column annotation = field.getAnnotation(com.digitolio.jdbi.annotations.Column.class);
-         if(annotation == null) continue;
-         String[] unique = annotation.unique();
-         if(unique.length == 0) continue;
+      for(Column column : allColumns) {
+
+         String[] unique = column.getUnique();
          for(String i : unique) {
             List<Column> columns = map.get(i);
             if(columns == null){
                columns = new ArrayList<>();
                map.put(i, columns);
             }
-            columns.add(new Column(field, fieldTranslatingStrategy.translate(field.getName()), annotation.nullable(), unique));
+            columns.add(column);
+         }
+      }
+      return map;
+   }
+   private Map<String, List<Column>> getIndexes(List<Column> allColumns) {
+      Map<String, List<Column>> map = new HashMap<>();
+      for(Column column : allColumns) {
+
+         String[] indexes = column.getIndex();
+         for(String i : indexes) {
+            List<Column> columns = map.get(i);
+            if(columns == null){
+               columns = new ArrayList<>();
+               map.put(i, columns);
+            }
+            columns.add(column);
          }
       }
       return map;
@@ -55,11 +69,12 @@ public class TableResolver {
    private List<Column> getColumns(List<Field> list, TranslatingStrategy fieldTranslatingStrategy) {
       List<Column> allColumns = new ArrayList<>();
       for(Field field : list) {
-
          com.digitolio.jdbi.annotations.Column annotation = field.getAnnotation(com.digitolio.jdbi.annotations.Column.class);
          boolean nullable = annotation != null ? annotation.nullable() : com.digitolio.jdbi.annotations.Column.defaultNullable;
          String[] unique = annotation == null || annotation.unique().length == 0  ? new String[]{} : annotation.unique();
-         allColumns.add(new Column(field, fieldTranslatingStrategy.translate(field.getName()), nullable, unique));
+         String[] index = annotation == null || annotation.index().length == 0  ? new String[]{} : annotation.index();
+         Integer length = annotation == null ? com.digitolio.jdbi.annotations.Column.defaultLength : annotation.length();
+         allColumns.add(new Column(field, fieldTranslatingStrategy.translate(field.getName()), nullable, unique, index, length));
       }
       return allColumns;
    }

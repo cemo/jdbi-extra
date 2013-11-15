@@ -15,7 +15,13 @@ public @interface Column {
 
     String[] unique() default {} ;
 
+    String[] index() default {} ;
+
+    int length() default defaultLength ;
+
     final static String defaultValueConstant = "$#!!#$";
 
     final static boolean defaultNullable = false;
+
+    final static int defaultLength = -1;
 }

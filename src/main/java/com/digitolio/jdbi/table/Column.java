@@ -15,11 +15,18 @@ public class Column {
 
    private String[] unique;
 
-   public Column(Field field, String databaseName, boolean nullable, String[] unique) {
+   private String[] index;
+
+   private int length;
+
+
+   public Column(Field field, String databaseName, boolean nullable, String[] unique, String[] index, int length) {
       this.field = field;
       this.databaseName = databaseName;
       this.nullable = nullable;
       this.unique = unique;
+      this.index = index;
+      this.length = length;
    }
 
    public Field getField() {
@@ -56,5 +63,13 @@ public class Column {
 
    public void setUnique(String[] unique) {
       this.unique = unique;
+   }
+
+   public String[] getIndex() {
+      return index;
+   }
+
+   public int getLength() {
+      return length;
    }
 }

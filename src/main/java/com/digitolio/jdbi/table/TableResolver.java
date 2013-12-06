@@ -70,6 +70,9 @@ public class TableResolver {
       List<Column> allColumns = new ArrayList<>();
       for(Field field : list) {
          com.digitolio.jdbi.annotations.Column annotation = field.getAnnotation(com.digitolio.jdbi.annotations.Column.class);
+         if(annotation != null && annotation.ignore()){
+            continue;
+         }
          boolean nullable = annotation != null ? annotation.nullable() : com.digitolio.jdbi.annotations.Column.defaultNullable;
          String[] unique = annotation == null || annotation.unique().length == 0  ? new String[]{} : annotation.unique();
          String[] index = annotation == null || annotation.index().length == 0  ? new String[]{} : annotation.index();

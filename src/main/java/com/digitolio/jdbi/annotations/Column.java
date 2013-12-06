@@ -19,6 +19,8 @@ public @interface Column {
 
     int length() default defaultLength ;
 
+    boolean ignore() default false;
+
     final static String defaultValueConstant = "$#!!#$";
 
     final static boolean defaultNullable = false;
